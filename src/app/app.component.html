@@ -47,13 +47,12 @@
   <h3>Possible Item Combinations from Unused Component Items</h3>
   <span class="grid grid-pad" name=combinations.itemCombinations>
     <span>
-      <br/>
-      <span *ngFor="let itemCombination of combinations.itemCombinations" class="col-1-4">
+      <li *ngFor="let itemCombination of combinations.itemCombinations" class="col-1-4">
         <a *ngFor="let item of itemCombination" class="col-1-4">
           <button class="module items-collected">
             <img src="../../assets/img/{{item.id}}.png">
           </button>
         </a>
-      </span>      
+      </li>      
     </span>
   </span>
