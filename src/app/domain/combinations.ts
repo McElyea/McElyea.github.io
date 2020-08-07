@@ -1,51 +1,47 @@
-import { Component, OnInit } from '@angular/core';
 import { Item } from './item';
 import { ItemService } from '../services/item.service';
 
-@Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
-})
-
 export class Combinations {
-  allItems: { [key: number]: Item } = {};
-  collectedItemIds: number[] = [];
-  potentialCompositeItemIds: number[] = [];
-  itemCombinationIds: number[][] = [];
-  combinations: {[key: string]: number[]} = {};
+  private allItems: { [key: number]: Item } = {};
+  private collectedItemIds: number[] = [];
+  private potentialCompositeItemIds: number[] = [];
+  private itemCombinationIds: number[][] = [];
+  private combinations: {[key: string]: number[]} = {};
 
   // These are used by the HTML
-  allComponentItems: Item[] = [];
-  collectedItems: Item[] = [];
-  potentialCompositeItems: Item[] = [];
-  itemCombinations: Item [][] = [];
+  public allComponentItems: Item[] = [];
+  public collectedItems: Item[] = [];
+  public potentialCompositeItems: Item[] = [];
+  public itemCombinations: Item [][] = [];
 
-  constructor(private itemService: ItemService) { 
+  constructor(private itemService?: ItemService) {
+    if (this.itemService === undefined){
+      this.itemService = new ItemService();
+    }
     this.loadAllItems();
     this.loadAllComponentItems();
   }
 
-  loadAllItems(): void {
+  private loadAllItems(): void {
     const items = this.itemService.getItems();
     for (const item of items){
       this.allItems[item.id] = item;
     }
   }
 
-  loadAllComponentItems(): void {
+  private loadAllComponentItems(): void {
     this.allComponentItems = [];
     for (let i = 1; i <= 9; i++) {
       this.allComponentItems.push(this.allItems[i]);
     }
   }
 
-  addComponentItem(item: Item): void {
+  public addComponentItem(item: Item): void {
     this.pushItemToCollectedItems(item);
     this.updateCraftableItems();
   }
 
-  addCompositeItem(item: Item): void {
+  public addCompositeItem(item: Item): void {
     this.pushItemToCollectedItems(item);
     const itemFirstDigit = Math.floor(item.id / 10);
     const itemSecondDigit = item.id % 10;
@@ -55,7 +51,7 @@ export class Combinations {
     this.removeCollectedItem(newItem2, true);
   }
 
-  removeCollectedItem(item: Item, update?: boolean): void {
+  public removeCollectedItem(item: Item, update?: boolean): void {
     if (item.id > 9) {
       const itemFirstDigit = Math.floor(item.id / 10);
       const itemSecondDigit = item.id % 10;
@@ -73,37 +69,29 @@ export class Combinations {
     }
   }
 
-  pushItemToCollectedItems(item: Item){
+  private pushItemToCollectedItems(item: Item){
     this.collectedItems.push(item);
     this.collectedItemIds.push(item.id);
   }
 
-  updateCraftableItems(): void {
+  private updateCraftableItems(): void {
     this.updateCurrentPotentialCompositeItems();
     this.updateCombinations();
   }
 
-  updateCurrentPotentialCompositeItems() {
+  private updateCurrentPotentialCompositeItems() {
     this.potentialCompositeItemIds = this.getUniqueCompositeIdsFromItemIds(this.collectedItemIds);
     this.potentialCompositeItems = this.getCompositeItemsFromIds(this.potentialCompositeItemIds);
   }
 
-  getCompositeItemsFromIds(itemIds: number[]): Item[]{
+  private getCompositeItemsFromIds(itemIds: number[]): Item[]{
     const returnItems: Item[] = [];
     for (const itemId of itemIds){
       returnItems.push(this.getItemById(itemId));
     }
     return returnItems;
   }
-
-  getComponentItemsFromIds(itemIds: number[]): Item[]{
-    const returnItems = [];
-    for (const itemId of itemIds){
-      returnItems.push(this.getItemById(itemId));
-    }
-    return returnItems;
-  }
-  getUniqueCompositeIdsFromItemIds(itemIds: number[]): number[] {
+  private getUniqueCompositeIdsFromItemIds(itemIds: number[]): number[] {
     const uniqueCraftableItemIds: number[] = [];
     const max = itemIds.length;
     if (max >= 2) {
@@ -129,11 +117,11 @@ export class Combinations {
     return uniqueCraftableItemIds;
   }
 
-  getItemById(itemId: number): Item{
+  private getItemById(itemId: number): Item{
     return this.allItems[itemId];
   }
 
-  updateCombinations(): void {
+  private updateCombinations(): void {
     this.initializeCombinations();
     if (this.collectedItems.length < 2) {
       return;
@@ -144,13 +132,13 @@ export class Combinations {
     this.updateFinalItemCombinations();
   }
 
-  initializeCombinations() {
+  private  initializeCombinations() {
     this.itemCombinations = [];
     this.itemCombinationIds = [];
     this.combinations = {};
   }
 
-  removePartialCombinations() {
+  private removePartialCombinations() {
     const workingCombinations: number[][] = [];
     const keys = Object.keys(this.combinations);
     let greatestCompositeItemIdsLength = 0;
@@ -176,7 +164,7 @@ export class Combinations {
     this.itemCombinationIds = finalItemCombos;
   }
 
-  updateFinalItemCombinations(): void{
+  private updateFinalItemCombinations(): void{
     this.itemCombinations = [];
     const combinationIds: number[][] = cloneArray(this.itemCombinationIds);
     const comboIdsLength = combinationIds.length;
@@ -195,7 +183,7 @@ export class Combinations {
     this.itemCombinations = finalComboItems;
   }
 
-  iterateCombinations(itemIds: number[]): void{
+  private iterateCombinations(itemIds: number[]): void{
     if (itemIds.length <= 1) { return; }
     const currentItemIds = cloneArray(itemIds);
     const componentItemIds = currentItemIds.filter(isComponentItem);
@@ -217,7 +205,7 @@ export class Combinations {
   }
 
 
-  removeComponentsSpentByCompositeItemCreation(collectedComponentItemIds: number[], itemId: number): number[]{
+  private removeComponentsSpentByCompositeItemCreation(collectedComponentItemIds: number[], itemId: number): number[]{
     const transformedComponentItemIds = cloneArray(collectedComponentItemIds);
     const itemTensDecimalPlace = Math.floor(itemId / 10);
     const itemOnesDecimalPlace = itemId % 10;

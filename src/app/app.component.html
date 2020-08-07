@@ -1,31 +1,25 @@
 <h1>{{title}}</h1>
-<span class="grid grid-pad" name=allComponentItems> 
+<span class="grid grid-pad" name=combinations.allComponentItems> 
   
   <h3>Component Items</h3> 
-    <a *ngFor="let item of allComponentItems" class="col-1-4" (click)="addComponentItem(item)">
-      <button mat-raised-button color="primary" matTooltip="item.name"
-        aria-label="Button that displays a tooltip when focused or hovered over" class="module item">
-  
-        <img src="../../assets/img/{{item.name}}.png">
+    <a *ngFor="let item of combinations.allComponentItems" class="col-1-4" (click)="combinations.addComponentItem(item)">
+      <button class="module item">  
+        <img src="../../assets/img/{{item.id}}.png">
       </button>
     </a>
   </span>
   <p>
     <br>
   </p>
-  <span>
-  <mat-divider class="mat-divider mat-divider-horizontal" 
-  role="separator" 
-  aria-orientation="horizontal">></mat-divider></span>
+  <span></span>
   
-  <span class="grid grid-pad" name=collectedItems>
+  <span class="grid grid-pad" name=combinations.collectedItems>
     <h3>Collected Items</h3>
-    <a *ngFor="let collectedItem of collectedItems" class="col-1-4" (click)="removeCollectedItem(collectedItem)">
+    <a *ngFor="let collectedItem of combinations.collectedItems" class="col-1-4" (click)="combinations.removeCollectedItem(collectedItem)">
   
-      <button mat-raised-button matTooltip="collectedItem.name" aria-label="collectedItem.name"
-        class="module items-collected">
+      <button class="module items-collected">
   
-        <img src="../../assets/img/{{collectedItem.name}}.png">
+        <img src="../../assets/img/{{collectedItem.id}}.png">
       </button>
     </a>
   </span>
@@ -33,19 +27,15 @@
     <br>
   </p>
   <span>
-  <mat-divider class="mat-divider mat-divider-horizontal" 
-  role="separator" 
-  aria-orientation="horizontal">></mat-divider></span>
   
-  <span class="grid grid-pad" name=potentialCompositeItems>
+  <span class="grid grid-pad" name=combinations.potentialCompositeItems>
     
   <h3>Possible Composite Items</h3>
-    <a *ngFor="let potentialCompositeItem of potentialCompositeItems" class="col-1-4" (click)="addCompositeItem(potentialCompositeItem)">
+    <a *ngFor="let potentialCompositeItem of combinations.potentialCompositeItems" class="col-1-4" (click)="combinations.addCompositeItem(potentialCompositeItem)">
   
-      <button mat-raised-button matTooltip="potentialCompositeItem.name"
-        aria-label="Button that displays a tooltip when focused or hovered over" class="module items-collected">
+      <button class="module items-collected">
   
-        <img src="../../assets/img/{{potentialCompositeItem.name}}.png">
+        <img src="../../assets/img/{{potentialCompositeItem.id}}.png">
       </button>
   
     </a>
@@ -54,21 +44,16 @@
     <br>
   </p>
   <span>
-  <mat-divider class="mat-divider mat-divider-horizontal" 
-  role="separator" 
-  aria-orientation="horizontal">></mat-divider></span>
   <h3>Possible Item Combinations from Unused Component Items</h3>
-  <span class="grid grid-pad" name=itemCombinations>
-    <mat-list>
-      <mat-list-item *ngFor="let itemCombination of itemCombinations" class="col-1-4">
-  
+  <span class="grid grid-pad" name=combinations.itemCombinations>
+    <span>
+      <br/>
+      <span *ngFor="let itemCombination of combinations.itemCombinations" class="col-1-4">
         <a *ngFor="let item of itemCombination" class="col-1-4">
-          <button mat-raised-button 
-            class="module items-collected">
-            <img src="../../assets/img/{{item.name}}.png">
+          <button class="module items-collected">
+            <img src="../../assets/img/{{item.id}}.png">
           </button>
         </a>
-  
-      </mat-list-item>
-    </mat-list>
+      </span>      
+    </span>
   </span>

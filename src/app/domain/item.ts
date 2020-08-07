@@ -2,7 +2,7 @@ export class Item {
     id: number;
     name: string;
 
-    constructor(id?: any){
+    constructor(id: any){
         let thisid = 0;
         if (typeof id === 'string')
         {
@@ -15,12 +15,10 @@ export class Item {
     }
 }
 
-// tslint:disable-next-line: typedef
 export function isComponentItem(id: number, index, array){
     return id <= 9;
 }
 
-// tslint:disable-next-line: typedef
 export function isCompositeItem(id: number, index, array){
     return id > 9;
 }
