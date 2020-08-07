@@ -117,8 +117,13 @@
               "devServerTarget": "tft-combinator:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "tft-combinator"
 }
