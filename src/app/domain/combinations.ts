@@ -64,7 +64,7 @@ export class Combinations {
     this.collectedItems.splice(itemIndex, 1);
     const itemIdIndex = this.collectedItemIds.indexOf(item.id);
     this.collectedItemIds.splice(itemIdIndex, 1);
-    if (update){
+    if (update === undefined || update){
       this.updateCraftableItems();
     }
   }
