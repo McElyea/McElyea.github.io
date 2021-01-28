@@ -2,7 +2,7 @@ import { Item } from './item';
 import { ItemService } from '../services/item.service';
 
 export class Combinations {
-  private allItems: { [key: number]: Item } = {};
+  public allItems: { [key: number]: Item } = {};
   private collectedItemIds: number[] = [];
   private potentialCompositeItemIds: number[] = [];
   private itemCombinationIds: number[][] = [];
@@ -84,14 +84,14 @@ export class Combinations {
     this.potentialCompositeItems = this.getCompositeItemsFromIds(this.potentialCompositeItemIds);
   }
 
-  private getCompositeItemsFromIds(itemIds: number[]): Item[]{
+  public getCompositeItemsFromIds(itemIds: number[]): Item[]{
     const returnItems: Item[] = [];
     for (const itemId of itemIds){
       returnItems.push(this.getItemById(itemId));
     }
     return returnItems;
   }
-  private getUniqueCompositeIdsFromItemIds(itemIds: number[]): number[] {
+  public getUniqueCompositeIdsFromItemIds(itemIds: number[]): number[] {
     const uniqueCraftableItemIds: number[] = [];
     const max = itemIds.length;
     if (max >= 2) {
@@ -117,7 +117,7 @@ export class Combinations {
     return uniqueCraftableItemIds;
   }
 
-  private getItemById(itemId: number): Item{
+  public getItemById(itemId: number): Item{
     return this.allItems[itemId];
   }
 
@@ -205,7 +205,7 @@ export class Combinations {
   }
 
 
-  private removeComponentsSpentByCompositeItemCreation(collectedComponentItemIds: number[], itemId: number): number[]{
+  public removeComponentsSpentByCompositeItemCreation(collectedComponentItemIds: number[], itemId: number): number[]{
     const transformedComponentItemIds = cloneArray(collectedComponentItemIds);
     const itemTensDecimalPlace = Math.floor(itemId / 10);
     const itemOnesDecimalPlace = itemId % 10;
